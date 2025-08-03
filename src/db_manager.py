@@ -1,130 +1,95 @@
 import psycopg2
+import logging
 
+from src.abs_manager import ABSManager
 
-def create_db(params: dict, db_name: str) -> None:
-    """
-    Функция для создания БД
-    """
-    try:
-        conn = psycopg2.connect(**params)
-        conn.autocommit = True
+from src.paths import root_join
+from src.config import LOG_LEVEL
 
-        with conn.cursor() as cur:
-            cur.execute(f"CREATE DATABASE {db_name};")
+# Logger setup
+logger = logging.getLogger(__name__)
+logger.setLevel(LOG_LEVEL)
+log_path = root_join('logs', f'{__name__}.log')
+fh = logging.FileHandler(log_path, mode='w')
+formatter = logging.Formatter('%(asctime)s - %(module)s - %(levelname)s - %(message)s')
+fh.setFormatter(formatter)
+logger.addHandler(fh)
 
-    except Exception as e:
-        print(f"Ошибка при создании базы данных: {e}")
+class DBManager(ABSManager):
+    """ Database manager """
 
+    def __init__(self, db_name, params=None):
+        """ Connects to Database and creates cursor """
+        self.conn = psycopg2.connect(dbname=db_name, **params)
+        self.cur = self.conn.cursor()
 
-def create_employers_table(params: dict, db_name: str) -> None:
-    """
-    Функция для создания таблицы сотрудников
-    """
-    params["database"] = db_name
-    try:
-        with psycopg2.connect(**params) as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    CREATE TABLE IF NOT EXISTS employers (
-                        id SERIAL PRIMARY KEY,
-                        employer_id VARCHAR UNIQUE,
-                        name VARCHAR NOT NULL,
-                        url VARCHAR,
-                        open_vacancies INTEGER
-                    );
-                """
-                )
-                conn.commit()
+    def get_companies_and_vacancies_count(self):
+        """ Returns a list of all companies and the number of vacancies for each company"""
+        self.cur.execute(
+            """
+            SELECT employer_name, COUNT(vacancies.employer_id)
+            FROM employers
+            INNER JOIN vacancies USING (employer_id)
+            GROUP BY employer_name
+            ORDER BY COUNT DESC
+            """
+        )
+        return self.cur.fetchall()
 
-    except psycopg2.Error as e:
-        print(f"Ошибка при создании таблицы: {e}")
+    def get_all_vacancies(self):
+        """ Returns a list of all vacancies with the company name, job title and salary, and a link to the vacancy."""
+        self.cur.execute(
+            """
+            SELECT v.vacancy_id, e.employer_name, a.name AS area_name, v.vacancy_name, v.salary, v.vacancy_url
+            FROM vacancies v
+            INNER JOIN employers e USING (employer_id)
+            INNER JOIN areas a ON v.vacancy_area = a.area_id
+            ORDER BY v.salary DESC
+            """
+        )
+        return self.cur.fetchall()
 
+    def get_avg_salary(self):
+        """ Returns average salary by vacancies """
+        self.cur.execute(
+            """
+            SELECT AVG(salary)
+            FROM vacancies
+            """
+        )
+        return self.cur.fetchall()
 
-def create_vacancies_table(params: dict, db_name: str) -> None:
-    """
-    Функция для создания таблицы вакансий
-    """
-    params["database"] = db_name
-    try:
-        with psycopg2.connect(**params) as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    CREATE TABLE IF NOT EXISTS vacancies (
-                        id SERIAL PRIMARY KEY,
-                        name VARCHAR NOT NULL,
-                        description TEXT,
-                        salary INTEGER,
-                        published_at DATE,
-                        employer_id VARCHAR NOT NULL,
-                        CONSTRAINT fk_employer_id FOREIGN KEY(employer_id) 
-                        REFERENCES employers(employer_id) ON DELETE CASCADE,
-                        url VARCHAR NOT NULL
-                    );
-                """
-                )
-                conn.commit()
+    def get_vacancies_with_higher_salary(self):
+        """ Returns a list of all vacancies where the salary is higher than the average for all vacancies """
+        self.cur.execute(
+            """
+            SELECT v.vacancy_id, e.employer_name, a.name AS area_name, v.vacancy_name, v.salary, v.vacancy_url
+            FROM vacancies v
+            INNER JOIN employers e USING (employer_id)
+            INNER JOIN areas a ON v.vacancy_area = a.area_id
+            WHERE v.salary >= (SELECT AVG(salary) FROM vacancies)
+            ORDER BY v.salary DESC
+            """
+        )
+        return self.cur.fetchall()
 
-    except psycopg2.Error as e:
-        print(f"Ошибка при создании таблицы: {e}")
+    def get_vacancies_with_keyword(self, keyword: str):
+        """ Returns a list of all vacancies whose titles contain the words passed to the method, for example python """
+        query = """
+            SELECT v.vacancy_id, e.employer_name, a.name AS area_name, v.vacancy_name, v.salary, v.vacancy_url
+            FROM vacancies v
+            INNER JOIN employers e USING (employer_id)
+            INNER JOIN areas a ON v.vacancy_area = a.area_id
+            WHERE v.salary >= (SELECT AVG(salary) FROM vacancies)
+            """
 
+        q_params = []
 
-def insert_data_in_vacancies(params: dict, db_name: str, data: list) -> None:
-    """
-    Функция для заполнения таблицы вакансий
-    """
-    params["database"] = db_name
-    try:
-        with psycopg2.connect(**params) as conn:
-            with conn.cursor() as cur:
-                for v in data:
-                    salary = None
-                    if v.get("salary") is not None:
-                        salary = v["salary"].get("from", None)
-                    cur.execute(
-                        """INSERT INTO vacancies (name, description, salary, employer_id, url)
-                    VALUES (%s, %s, %s, %s, %s)
-                    """,
-                        (
-                            v["name"],
-                            v.get("responsibility", "Нет описания"),
-                            salary,
-                            v["employer"]["id"],
-                            v["alternate_url"],
-                        ),
-                    )
-                conn.commit()
+        if keyword:
+            query += " AND (v.vacancy_name ILIKE %s OR e.employer_name ILIKE %s OR a.name ILIKE %s)"
+            q_params.extend([f"%{keyword}%"] * 3)
 
-    except psycopg2.Error as e:
-        print(f"Ошибка при заполнении таблицы: {e}")
+        query += " ORDER BY v.salary DESC"
 
-
-def insert_data_in_employers(params: dict, db_name: str, data: dict) -> None:
-    """
-    Функция для заполнения таблицы сотрудников
-    """
-    params["database"] = db_name
-    try:
-        with psycopg2.connect(**params) as conn:
-            with conn.cursor() as cur:
-                for employer_id, employer_info in data.items():
-                    if isinstance(employer_info, dict) and employer_info:
-                        open_vacancies = employer_info.get("open_vacancies", 0)
-                        name = employer_info.get("name", "Неизвестно")
-                        url = employer_info.get("url", "")
-
-                        cur.execute(
-                            """INSERT INTO employers (employer_id, name, url, open_vacancies)
-                                       VALUES (%s, %s, %s, %s)
-                                       """,
-                            (employer_id, name, url, open_vacancies),
-                        )
-                    else:
-                        print(
-                            f"Неверный формат данных для работодателя {employer_id}: {employer_info}"
-                        )
-                conn.commit()
-
-    except psycopg2.Error as e:
-        print(f"Ошибка при заполнении таблицы: {e}")
+        self.cur.execute(query, q_params)
+        return self.cur.fetchall()
