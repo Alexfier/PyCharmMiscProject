@@ -1,0 +1,32 @@
+{% extends 'mailing/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <p class="card-text">Пользователь: {{ object.email }}</p>
+              <p class="card-text">Телефон: {{ object.phone_number | default:"-" }}</p>
+              <p class="card-text">Страна: {{ object.country | default:"-" }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a class="btn btn-secondary" href="{% url 'users:user_list' %}" role="button">Назад</a>
+                  <a class="btn btn-primary" href="{% url 'users:user_update' user.pk %}" role="button">Редактировать</a>
+                  {% if perms.user.can_block_users and user.is_active%}
+                      <form action="{% url 'users:block_user' user.pk %}" method="post">
+                      {% csrf_token %}
+                      <button class="btn btn-danger" type="submit">Заблокировать пользователя</button>
+                      </form>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
