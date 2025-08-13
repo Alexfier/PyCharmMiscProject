@@ -5,13 +5,14 @@
         <div class="col-6">
             <form class="row" method="post" enctype="multipart/form-data">
                 <div class="card">
+                    <p class="card-text">Действительно хотите удалить {{ object.subject }}</p>
                     <div class="card-body">
                         {% csrf_token %}
-                        {{ form.as_p }}
                     </div>
                     <button type="submit" class="btn btn-primary">
-                      Регистрация
+                        Удалить
                     </button>
+                    <a class="btn btn-primary" href="{% url 'messagin_service:mailings_list' %}" role="button">Отменить</a>
                 </div>
             </form>
         </div>

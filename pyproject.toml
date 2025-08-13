@@ -1,51 +1,20 @@
 [tool.poetry]
-name = "messaging-app-django"
+name = "coursework-management-service"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Aleksandr <feat9999@yandex.ru>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-python-dotenv = "^1.0.1"
-psycopg2 = "^2.9.10"
-psycopg2-binary = "^2.9.10"
-django = "4.2.2"
-django-phonenumber-field = "^8.0.0"
-django-phonenumbers = "^1.0.1"
-pillow = "^11.0.0"
-redis = "^5.2.1"
+django = "^5.2.4"
+requests = "^2.32.4"
+pillow = "^11.3.0"
 
 
 [tool.poetry.group.lint.dependencies]
-flake8 = "^7.1.1"
-mypy = "^1.14.0"
-black = "^24.10.0"
-isort = "^5.13.2"
+flake8 = "^7.3.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.black]
-# Максимальная длина строки
-line-length = 119
-# Файлы, которые не нужно форматировать
-exclude = '''
-(
-  /(
-      \.eggs         # Исключить несколько общих каталогов
-    | \.git          # в корне проекта
-    | \.hg
-    | \.mypy_cache
-    | \.tox
-    | \.venv
-    | dist
-  )/
-  | foo.py           # Также отдельно исключить файл с именем foo.py
-                     # в корне проекта
-)
-'''
-
-[tool.isort]
-line_length = 119

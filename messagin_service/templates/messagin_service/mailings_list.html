@@ -1,0 +1,26 @@
+{% extends 'messagin_service/base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row text-center">
+        <a class="btn btn-primary" href="{% url 'messagin_service:mailings_create' %}" role="button">Создать рассылку</a>
+        <div class="col-3">
+        {% for mailings in object_list %}
+            <div class="card mb-3 box-shadow">
+                <div class="card-header">
+                    </div>
+                        <div class="card-body">
+                        <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                        <li>- {{ mailings.date_first }}</li>
+                        <li>- {{ mailings.date_end }}</li>
+                        <li>- {{ mailings.status }}</li>
+                        <li>- {{ mailings.message }}</li>
+                        <li>- {{ mailings.recipient }}</li>
+                        <a class="btn btn-primary" href="{% url 'messagin_service:mailings_update' mailings.pk %}" role="button">Редактировать</a>
+                        <a class="btn btn-primary" href="{% url 'messagin_service:mailings_delete' mailings.pk %}" role="button">Удалить</a>
+                        </div>
+                </div>
+        {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
