@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Детали рассылки #{{ object.id }}</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Основная информация</h5>
+            <p><strong>Статус:</strong> {{ object.get_status_display }}</p>
+            <p><strong>Дата начала:</strong> {{ object.start_time }}</p>
+            {% if object.end_time %}
+                <p><strong>Дата окончания:</strong> {{ object.end_time }}</p>
+            {% endif %}
+            <p><strong>Активна:</strong> {{ object.is_active|yesno:"Да,Нет" }}</p>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Сообщение</h5>
+            <p><strong>Тема:</strong> {{ object.message.subject }}</p>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Клиенты ({{ object.clients.count }})</h5>
+            <ul>
+                {% for client in object.clients.all %}
+                    <li>{{ client.full_name }} ({{ client.email }})</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <a href="{% url 'messaging:mailing_list' %}" class="btn btn-secondary mt-3">Назад к списку</a>
+</div>
+{% endblock %}

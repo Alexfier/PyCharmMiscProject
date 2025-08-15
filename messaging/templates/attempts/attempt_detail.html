@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Детали попытки рассылки</h2>
+        <div>
+            <a href="{% url 'messaging:attempt_list' %}" class="btn btn-outline-secondary">
+                К списку попыток
+            </a>
+            <a href="{% url 'messaging:mailing_list' pk=attempt.mailing.pk %}"
+               class="btn btn-outline-primary ms-2">
+                К рассылке
+            </a>
+            <a href="{% url 'messaging:mailing_detail' pk=attempt.mailing.pk %}"
+               class="btn btn-outline-info ms-2">
+                Подробнее о рассылке
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5>Основная информация</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Рассылка:</dt>
+                        <dd class="col-sm-8">
+                            <a href="{% url 'messaging:mailing_list' pk=attempt.mailing.pk %}">
+                                {{ attempt.mailing.name }}
+                            </a>
+                        </dd>
+
+                        <dt class="col-sm-4">Дата попытки:</dt>
+                        <dd class="col-sm-8">{{ attempt.attempt_time|date:"d.m.Y H:i" }}</dd>
+
+                        <dt class="col-sm-4">Статус:</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge 
+                                {% if attempt.status == 'success' %}bg-success
+                                {% elif attempt.status == 'failure' %}bg-danger
+                                {% else %}bg-warning{% endif %}">
+                                {{ attempt.get_status_display }}
+                            </span>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Клиентов:</dt>
+                        <dd class="col-sm-8">{{ attempt.mailing.clients.count }}</dd>
+
+                        <dt class="col-sm-4">Начало:</dt>
+                        <dd class="col-sm-8">{{ attempt.mailing.start_time|date:"d.m.Y H:i" }}</dd>
+
+                        <dt class="col-sm-4">Окончание:</dt>
+                        <dd class="col-sm-8">{{ attempt.mailing.end_time|date:"d.m.Y H:i" }}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5>Техническая информация</h5>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <h6>Ответ сервера:</h6>
+                <div class="p-3 bg-light rounded">
+                    <pre>{{ attempt.server_response }}</pre>
+                </div>
+            </div>
+            
+            {% if attempt.error_message %}
+            <div class="mb-3">
+                <h6>Сообщение об ошибке:</h6>
+                <div class="p-3 bg-light rounded">
+                    <pre>{{ attempt.error_message }}</pre>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

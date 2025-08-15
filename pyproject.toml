@@ -1,19 +1,16 @@
 [tool.poetry]
-name = "coursework-management-service"
+name = "mailing-web"
 version = "0.1.0"
 description = ""
-authors = ["Aleksandr <feat9999@yandex.ru>"]
+authors = ["Ekaterina <ekaterina.kuz@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-django = "^5.2.4"
-requests = "^2.32.4"
-pillow = "^11.3.0"
+login = "^0.0.6"
+celery = "^5.5.3"
+dotenv = "^0.9.9"
 
-
-[tool.poetry.group.lint.dependencies]
-flake8 = "^7.3.0"
 
 [build-system]
 requires = ["poetry-core"]
