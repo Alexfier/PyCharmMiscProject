@@ -1,28 +1,8 @@
-# Игнорировать системные файлы и папки
-$Recycle.Bin/
-$SysReset/
-Program Files/
-Program Files (x86)/
-ProgramData/
-Desktop/
-Documents/
-Downloads/
-Favorites/
-Links/
-Music/
-Videos/
-# Игнорировать IDE и конфигурационные файлы
-.idea/
-*.iml
-
-# Игнорировать временные файлы
-*.log
-*.tmp
-             # Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-assets
+
 # C extensions
 *.so
 
@@ -51,13 +31,13 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
-.git/
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
-Homework_10.1/htmlcov/
+htmlcov/
 .tox/
 .nox/
 .coverage
@@ -76,7 +56,7 @@ cover/
 *.pot
 
 # Django stuff:
-#*.log
+*.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
@@ -114,12 +94,6 @@ ipython_config.py
 #   install all needed dependencies.
 #Pipfile.lock
 
-# UV
-#   Similar to Pipfile.lock, it is generally recommended to include uv.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#uv.lock
-
 # poetry
 #   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
 #   This is especially recommended for binary packages to ensure reproducibility, and is more
@@ -148,9 +122,9 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-src/.env
-.venv
 .env
+.venv
+env/
 venv/
 ENV/
 env.bak/
@@ -185,6 +159,4 @@ cython_debug/
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-
-# PyPI configuration file
-.pypirc
+.idea/
