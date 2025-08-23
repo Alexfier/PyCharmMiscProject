@@ -1,0 +1,48 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+<h1 class="text-center" style="color: #0d6efd">Отчет по рассылке: {{ object.message.topic }}</h1>
+
+<div class="row">
+  <div class="col-2">
+  </div>
+  <div class="col-8">
+    <p>Статус рассылки: {{ object.status }}</p>
+    <p>Дата создания: {{ object.first_sending }}</p>
+
+    <h2 class="text-center" style="color: #0d6efd">Статистика отправок</h2>
+
+    <ul class="list-group list-group-numbered">
+      <li class="list-group-item">Успешных отправок: {{ successful_attempts }}</li>
+      <li class="list-group-item">Неуспешных отправок: {{ failed_attempts }}</li>
+      <li class="list-group-item">Всего попыток: {{ total_attempts }}</li>
+    </ul>
+    <p></p>
+    <h4 class="text-center" style="color: #0d6efd">Подробности попыток</h4>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Дата и время</th>
+          <th scope="col">Статус</th>
+          <th scope="col">Ответ сервера</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for attempt in object.attempts.all %}
+            <tr>
+                <td>{{ attempt.time }}</td>
+                <td>{{ attempt.get_status_display }}</td>
+                <td>{{ attempt.response }}</td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <a class="btn btn-secondary" href="{% url 'mailing:mailing_list' %}" role="button">Назад к списку рассылок</a>
+  </div>
+  <div class="col-2">
+  </div>
+</div>
+
+{% endblock %}

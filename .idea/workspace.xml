@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="94959600-234b-434d-a682-c49234afb078" name="Changes" comment="корректировка 5">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/Cursovay3.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="ea3ef536-a76a-4d00-aa87-1a28704593db" name="Changes" comment="v3" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,103 +18,79 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="develop" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;Vitaly9319899520&quot;
+    &quot;assignee&quot;: &quot;Alexfier&quot;
   }
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;git@github.com:Vitaly9319899520/Cursovay-3.git&quot;,
-    &quot;accountId&quot;: &quot;176774b5-12d4-48df-98a1-616b490b2fd6&quot;
+    &quot;url&quot;: &quot;https://github.com/Alexfier/PyCharmMiscProject.git&quot;,
+    &quot;accountId&quot;: &quot;9fc46b7e-138b-489a-a897-9adc3d741c7c&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 3
 }</component>
-  <component name="ProjectId" id="2xi9clquvoxkID9lth544WmC0P1" />
+  <component name="ProjectId" id="31KeNcYWHuZzskQhoTVzoIrp8Yw" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Python.main.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main"
+    "git-widget-placeholder": "#2 on 4",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\User\PycharmProjects\Cursovay3\src" />
-    </key>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-a5bc9544c897-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.23654.177" />
+        <option value="bundled-python-sdk-4c141bd692a7-e2d783800521-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.26927.90" />
       </set>
     </attachedChunks>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task id="LOCAL-00001" summary="корректировка 1">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ea3ef536-a76a-4d00-aa87-1a28704593db" name="Changes" comment="" />
+      <created>1755277152647</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1755277152647</updated>
+    </task>
+    <task id="LOCAL-00001" summary="v5">
       <option name="closed" value="true" />
-      <created>1748408302390</created>
+      <created>1755277172604</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1748408302390</updated>
+      <updated>1755277172604</updated>
     </task>
-    <task id="LOCAL-00002" summary="корректировка 2">
+    <task id="LOCAL-00002" summary="v1">
       <option name="closed" value="true" />
-      <created>1748408398888</created>
+      <created>1755529114309</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1748408398888</updated>
+      <updated>1755529114309</updated>
     </task>
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="94959600-234b-434d-a682-c49234afb078" name="Changes" comment="корректировка 2" />
-      <created>1748410109466</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1748410109466</updated>
-    </task>
-    <task id="LOCAL-00003" summary="корректировка 3">
+    <task id="LOCAL-00003" summary="v3">
       <option name="closed" value="true" />
-      <created>1748410240296</created>
+      <created>1755781429288</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1748410240296</updated>
+      <updated>1755781429288</updated>
     </task>
-    <task id="LOCAL-00004" summary="корректировка 4">
-      <option name="closed" value="true" />
-      <created>1748410753824</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1748410753824</updated>
-    </task>
-    <task id="LOCAL-00005" summary="корректировка 5">
-      <option name="closed" value="true" />
-      <created>1748411719641</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1748411719641</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -136,12 +105,19 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="завершение2" />
-    <MESSAGE value="корректировка 1" />
-    <MESSAGE value="корректировка 2" />
-    <MESSAGE value="корректировка 3" />
-    <MESSAGE value="корректировка 4" />
-    <MESSAGE value="корректировка 5" />
-    <option name="LAST_COMMIT_MESSAGE" value="корректировка 5" />
+    <MESSAGE value="v5" />
+    <MESSAGE value="v1" />
+    <MESSAGE value="v3" />
+    <option name="LAST_COMMIT_MESSAGE" value="v3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/mailing/admin.py</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
