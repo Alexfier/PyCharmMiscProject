@@ -1,0 +1,97 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=${USER}
+      - POSTGRES_PASSWORD=${PASSWORD}
+      - POSTGRES_DB=${NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    expose:
+      - "${PORT}"
+    healthcheck:
+      test: pg_isready -U ${USER} -d ${NAME}
+      interval: 3s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
+  redis:
+    image: redis:alpine
+    expose:
+      - "6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    image: ${DOCKER_HUB_USERNAME}/habits:${GIT_SHA}
+    command:
+      sh -c "python manage.py migrate --noinput && \
+      python manage.py collectstatic -c --noinput && \
+      gunicorn config.wsgi:application --bind 0.0.0.0:8000"
+    env_file: .env
+    expose:
+      - "8000"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health/" ]
+      interval: 30s
+      timeout: 15s
+      retries: 2
+      start_period: 5s
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - static_volume:/app/staticfiles
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - static_volume:/app/staticfiles
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  celery_worker:
+    image: ${DOCKER_HUB_USERNAME}/habits:${GIT_SHA}
+    command: celery -A config worker --loglevel=info
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+
+  celery_beat:
+    image: ${DOCKER_HUB_USERNAME}/habits:${GIT_SHA}
+    command: celery -A config beat --loglevel=info
+    env_file: .env
+    healthcheck:
+      test: [ "CMD-SHELL", "celery --app config inspect ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:
+  static_volume:

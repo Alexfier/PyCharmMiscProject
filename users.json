@@ -1,0 +1,86 @@
+[
+{
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$KqZy8Ogj9j4iTgE8Zqt8lo$79q1xDOfMVAY/Oc4EA1YwE/uO6KgqaTbBqf1rtSsZ5M=",
+        "last_login": "2024-09-14T14:01:50.564Z",
+        "is_superuser": true,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-09-14T14:00:07.233Z",
+        "email": "admin@example.com",
+        "phone": null,
+        "city": null,
+        "avatar": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+        "password": "123",
+        "last_login": null,
+        "is_superuser": false,
+        "first_name": "Тест1",
+        "last_name": "Тестов1",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-09-14T14:02:25Z",
+        "email": "sky@pro.ru",
+        "phone": "+79999999999",
+        "city": "Москва",
+        "avatar": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+        "password": "12345",
+        "last_login": null,
+        "is_superuser": false,
+        "first_name": "Тест2",
+        "last_name": "Тестов2",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-09-14T14:04:23Z",
+        "email": "test@test.com",
+        "phone": "+79999999999",
+        "city": "Самара",
+        "avatar": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.payment",
+    "pk": 1,
+    "fields": {
+        "user": 2,
+        "date": "2024-09-14T14:04:11.773Z",
+        "paid_course": 2,
+        "paid_lesson": 1,
+        "payment_sum": 50000,
+        "payment_method": "Наличные"
+    }
+},
+{
+    "model": "users.payment",
+    "pk": 2,
+    "fields": {
+        "user": 3,
+        "date": "2024-09-14T14:05:33.320Z",
+        "paid_course": 3,
+        "paid_lesson": 2,
+        "payment_sum": 15000,
+        "payment_method": "Перевод"
+    }
+}
+]

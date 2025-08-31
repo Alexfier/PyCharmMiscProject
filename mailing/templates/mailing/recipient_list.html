@@ -1,0 +1,33 @@
+{% extends 'mailing/base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-4">
+  </div>
+  <div class="col-4">
+    <a class="btn btn-success w-100" style="text-align: center" href="{% url 'mailing:recipient_create'%}" role="button">Добавить получателя</a>
+  </div>
+  <div class="col-4">
+  </div>
+</div>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for recipient in object_list %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <p class="card-text">{{ recipient.full_name | upper }}</p>
+              <p class="card-text">{{ recipient.email }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a class="btn btn-primary" href="{% url 'mailing:recipient' recipient.pk %}" role="button">Подробнее</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

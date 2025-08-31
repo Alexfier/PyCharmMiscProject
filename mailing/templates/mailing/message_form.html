@@ -1,0 +1,22 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Сообщение{% endblock %}
+
+{% block content %}
+<h2 class="text-center" style="color: #0d6efd">Сообщение</h2>
+<div class="row">
+    <div class="col-3">
+    </div>
+    <div class="col-6">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a href="{% url 'mailing:message_list' %}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+    <div class="col-3">
+    </div>
+</div>
+{% endblock %}

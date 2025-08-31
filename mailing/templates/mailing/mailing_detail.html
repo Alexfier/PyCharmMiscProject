@@ -1,0 +1,51 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-1">
+        <div class="col">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <p class="card-text">Рассылка "{{ object.message.topic }}"</p>
+              <p class="card-text">Cообщениe: {{ object.message.text | truncatechars:100 }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a class="btn btn-secondary" href="{% url 'mailing:mailing_list' %}" role="button">Назад</a>
+                  {% if user == mailing.owner %}
+                    <a class="btn btn-warning" href="{% url 'mailing:mailing_update' mailing.pk %}" role="button">Редактировать</a>
+                    <a class="btn btn-success" href="{% url 'mailing:mailing_send' mailing.pk %}" role="button">Запустить рассылку</a>
+                    <a class="btn btn-danger" href="{% url 'mailing:mailing_delete' mailing.pk %}" role="button">Удалить</a>
+                    <a class="btn btn-primary" href="{% url 'mailing:mailing_report' mailing.pk %}" role="button">Посмотреть отчёт</a>
+                  {% else %}
+                    <a class="btn btn-primary" href="{% url 'mailing:mailing_report' mailing.pk %}" role="button">Посмотреть отчёт</a>
+                    {% if perms.user.can_disabling_mailing and not mailing.status == "completed" %}
+                      <form action="{% url 'mailing:disabling_mailing' mailing.pk %}" method="post">
+                      {% csrf_token %}
+                      <button class="btn btn-secondary" type="submit">Отключить рассылку</button>
+                      </form>
+                    {% endif %}
+                  {% endif %}
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% if user == product.owner %}
+                  <a class="btn btn-primary" href="{% url 'catalog:product_update' product.pk %}" role="button">Редактировать</a>
+                  {% endif %}
+                  {% if perms.catalog.can_unpublish_product and product.is_published %}
+                    <form action="{% url 'catalog:unpublish_product' product.pk %}" method="post">
+                      {% csrf_token %}
+                      <button class="btn btn-secondary" type="submit">Снять с публикации</button>
+                    </form>
+                  {% endif %}
+                  {% if perms.catalog.delete_product or user == product.owner %}
+                    <a class="btn btn-danger" href="{% url 'catalog:product_delete' product.pk %}" role="button">Удалить</a>
+                  {% endif %}
